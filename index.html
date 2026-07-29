@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EvoGo – Ventas rápidas conectadas a XgestEvo</title>
+  <meta name="description" content="EvoGo es la app de pedidos móviles de Madinfor conectada a XgestEvo: catálogo, tarifas y stock en tiempo real, confirmación de pedido al instante. Disponible para Android y iOS.">
+  <link rel="stylesheet" href="css/evogo.css">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="EvoGo – Ventas rápidas con XgestEvo">
+  <meta property="og:description" content="Pedidos, clientes y stock sincronizados con XgestEvo. Confirmación de pedido al momento.">
+  <meta property="og:image" content="img/og_banner.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="EvoGo">
+  <meta name="twitter:description" content="Ventas rápidas conectadas a XgestEvo.">
+  <meta name="twitter:image" content="img/og_banner.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- Datos estructurados (Organization) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Madinfor S.L.U.",
+    "url": "https://madinfor.com/",
+    "email": "madinfor@madinfor.com",
+    "telephone": "+34 957 689 436",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Plaza de los Naranjos, 16",
+      "addressLocality": "Aguilar de la Frontera",
+      "postalCode": "14920",
+      "addressRegion": "Córdoba",
+      "addressCountry": "ES"
+    }
+  }
+  </script>
+
+  <!-- Estilos puntuales -->
+  <style>
+    /* Layouts utilitarios */
+    .grid{display:grid;gap:16px}
+    .grid-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .grid-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .grid-4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+    .center{text-align:center}
+    .muted{color:#475569}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:.35rem .6rem;border:1px solid #e5e7eb;border-radius:999px;font-size:.9rem}
+
+    /* Hero mejorado */
+    .hero{position:relative;background:linear-gradient(180deg,#ffffff, #f8fafc)}
+    .hero .wrap{display:grid;gap:20px;align-items:center}
+    .store-badges{display:flex;flex-wrap:wrap;gap:10px}
+    .trust{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .trust small{color:#64748b}
+
+    /* Sección stats */
+    .stats{padding:28px 0;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;background:#fff}
+    .stat{border:1px solid #e5e7eb;border-radius:12px;padding:16px;background:#fff}
+    .stat h3{margin:0;font-size:1.8rem;color:var(--blue)}
+    .stat p{margin:.25rem 0 0;color:#334155}
+
+    /* Features pro */
+    .feature{position:relative}
+    .feature-icon{font-size:1.4rem}
+
+    /* Cómo funciona */
+    .steps{counter-reset:step}
+    .step{border:1px solid #e5e7eb;border-radius:12px;padding:16px;background:#fff}
+    .step:before{counter-increment:step;content:counter(step);display:inline-grid;place-content:center;width:28px;height:28px;border-radius:999px;background:var(--blue);color:#fff;font-weight:700;margin-right:8px}
+
+    /* Testimonios */
+    .testis{background:#f8fafc;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;padding:44px 0}
+    .quote{border:1px solid #e5e7eb;border-radius:12px;padding:16px;background:#fff}
+    .quote strong{display:block;margin-top:8px;color:#0f172a}
+    .quote small{color:#64748b}
+
+    /* CTA final */
+    .cta2{position:relative}
+    .cta2 .wrap{max-width:800px}
+
+    /* Footer (Madinfor) */
+    .site-footer {background:#0b1220;color:#f1f5f9;padding:40px 0;margin-top:40px;font-size:.95rem}
+    .footer-grid {display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;align-items:flex-start}
+    .footer-brand address {font-style:normal;line-height:1.6;margin:0}
+    .footer-brand strong {font-size:1.1rem;color:#fff}
+    .contact-list {list-style:none;padding:0;margin:16px 0 0}
+    .contact-list li {margin:.3rem 0}
+    .contact-list span {font-weight:600;color:#f97316;margin-right:4px}
+    .legal {margin-top:20px;color:#94a3b8;font-size:.85rem}
+    .footer-contact a {color:#f1f5f9;text-decoration:none}
+    .footer-contact a:hover {text-decoration:underline}
+
+    /* Barra legal horizontal */
+    .legal-bar{background:#f8fafc;border-top:1px solid #e5e7eb;font-size:.9rem}
+    .legal-bar .wrap{display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap;padding:10px 20px;color:#475569}
+    .legal-bar a{color:#0f172a;text-decoration:none}
+    .legal-bar a:hover{text-decoration:underline}
+
+    /* Barra fija de contacto */
+    .sticky-bar{position:sticky;bottom:0;background:#fffffff2;border-top:1px solid #e5e7eb;backdrop-filter:saturate(1.2) blur(6px)}
+    .sticky-bar .wrap{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:10px 20px}
+    .sticky-bar .mini{display:flex;gap:10px;align-items:center}
+    /* Mockup app */
+    .mockup{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;padding:32px 0}
+    @media (min-width: 900px){.mockup{grid-template-columns:420px 1fr}}
+    .phone{width:100%;max-width:420px;aspect-ratio:9/19;border:12px solid #0b1220;border-bottom-width:18px;border-top-width:18px;border-radius:32px;position:relative;background:#000;box-shadow:0 10px 30px rgba(2,6,23,.2)}
+    .phone-notch{position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:40%;height:14px;background:#0b1220;border-radius:0 0 16px 16px}
+    .phone-screen{width:100%;height:100%;object-fit:cover;border-radius:20px}
+    /* Extended sections */
+    .about p{max-width:800px}
+    .bullet{list-style:disc;padding-left:18px}
+    .bullet li{margin:.35rem 0}
+    .dist-card{border:1px solid #e5e7eb;border-radius:16px;padding:20px;background:#fff}
+    /* Mockups en horizontal */
+    .gallery-h{display:flex;gap:12px;overflow-x:auto;padding:6px;scroll-snap-type:x mandatory}
+    .gallery-h .shot{flex:0 0 clamp(220px, 26vw, 340px);aspect-ratio:16/9;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;box-shadow:0 6px 22px rgba(2,6,23,.08);scroll-snap-align:start;background:#000}
+    .gallery-h img{width:100%;height:100%;object-fit:cover;object-position:center 70%;display:block}
+    .gallery-h::-webkit-scrollbar{height:8px}
+    .gallery-h::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:999px}
+
+    /* Aviso informativo */
+    .notice{display:flex;gap:12px;align-items:flex-start;border:1px solid #bfdbfe;background:#eff6ff;border-radius:12px;padding:16px 20px;margin:0 0 24px}
+    .notice .ico{font-size:1.3rem;line-height:1}
+    .notice h4{margin:0 0 4px;font-size:1rem}
+    .notice p{margin:0;color:#334155}
+
+    /* Vídeo tutorial */
+    .video-frame{max-width:900px;margin:0 auto;background:#0b0d10;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(2,6,23,.12)}
+    .video-frame video{width:100%;height:auto;max-height:70vh;display:block;object-fit:contain;background:#000}
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Evo<span class="go-badge">Go</span></h1>
+      <p class="subtitle">Cierra pedidos en minutos y sincroniza al instante con <strong>XgestEvo</strong>.</p>
+      <div class="store-badges">
+        <a href="https://play.google.com/store/apps/details?id=com.madinfor.evogo" class="btn primary">Google Play</a>
+        <a href="https://apps.apple.com/es/app/evogo/id6753867853" class="btn outline">App Store</a>
+        <a href="mailto:madinfor@madinfor.com" class="btn" style="border:1px solid #e5e7eb">Solicitar demo</a>
+      </div>
+      <div class="trust" style="margin-top:8px">
+        <small>Integrada con</small>
+        <span class="chip">🧩 XgestEvo</span>
+        <span class="chip">🔐 SSL & RGPD</span>
+        <span class="chip">☁️ Confirmación por email</span>
+      </div>
+    
+  </div>
+</div>
+
+
+<!-- SOBRE EVOGO -->
+<section class="wrap" style="padding:60px 0">
+  <h2>Sobre EvoGo</h2>
+  <p><strong>EvoGo</strong> es la app de pedidos móviles desarrollada por Madinfor S.L.U. para que tanto clientes finales como distribuidores puedan realizar sus pedidos de forma rápida, sencilla y segura. Con EvoGo eliminas errores en la gestión de ventas, agilizas la comunicación con tu proveedor y dispones de toda la información de precios y stock en tiempo real.</p>
+</section>
+
+<!-- MOCKUP APP -->
+<section class="wrap mockup">
+  <div class="phone">
+    <div class="phone-notch"></div>
+    <img src="img/evogo_catalog.jpg" alt="Catálogo EvoGo en la app" class="phone-screen">
+  </div>
+  <div class="mockup-copy">
+    <h2>Una app pensada para vender</h2>
+    <p>EvoGo ofrece una experiencia intuitiva: listado de productos con precios claros, control de cantidades y acceso directo al carrito. Ideal para que tus clientes hagan pedidos sin complicaciones.</p>
+    <ul class="muted">
+      <li>Catálogo digital siempre actualizado</li>
+      <li>Precios y tarifas personalizados según cliente</li>
+      <li>Pedidos confirmados al instante por email</li>
+      <li>Disponible para Android y iOS</li>
+      <li>Seguridad garantizada con cumplimiento RGPD</li>
+    </ul>
+  </div>
+</section>
+
+<!-- GALERÍA DE CAPTURAS -->
+<section class="wrap" style="padding:0 20px 60px">
+  <div class="gallery-h">
+    <div class="shot"><img src="img/evogo_catalog.jpg" alt="Catálogo de productos en la app EvoGo"></div>
+    <div class="shot"><img src="img/evogo_cart.png" alt="Pantalla de pedido/carrito en la app EvoGo"></div>
+  </div>
+</section>
+
+<!-- CÓMO EMPEZAR -->
+<section class="wrap" style="padding:0 20px 60px">
+  <h2 class="center">Cómo empezar con EvoGo</h2>
+  <p class="center muted">Aprende a usar la app en 2 minutos</p>
+  <div class="notice">
+    <div class="ico">ℹ️</div>
+    <div>
+      <h4>Antes de empezar</h4>
+      <p>Para acceder a la aplicación debes ponerte en contacto con el <strong>administrador</strong> para que te proporcione las <strong>credenciales de acceso (código de tienda)</strong>. Una vez las tengas, podrás iniciar sesión y comenzar a utilizar EvoGo.</p>
+    </div>
+  </div>
+  <div class="video-frame">
+    <video controls playsinline preload="metadata">
+      <source src="https://app.madinfor.com/videos/tutorial-evogo.mp4" type="video/mp4">
+      Tu navegador no soporta la etiqueta de vídeo.
+    </video>
+  </div>
+</section>
+
+<!-- GESTIÓN DE CUENTA -->
+<section class="wrap" style="padding:0 20px 60px">
+  <h2>Cómo gestionar tu cuenta</h2>
+  <p class="muted">Gestiona todo lo relacionado con tu cuenta desde un único lugar:</p>
+  <ul class="bullet">
+    <li>🔒 <strong>Tus datos</strong> — actualiza nombre, teléfono y contraseña.</li>
+    <li>📍 <strong>Direcciones</strong> — añade, edita o elimina direcciones de envío.</li>
+    <li>🛒 <strong>Pedidos</strong> — consulta el historial y el estado de tus pedidos.</li>
+    <li>📄 <strong>Facturas</strong> — descarga y revisa facturas y albaranes.</li>
+  </ul>
+  <div class="video-frame">
+    <video controls playsinline preload="metadata">
+      <source src="https://app.madinfor.com/videos/tutorial-user.mp4" type="video/mp4">
+      Tu navegador no soporta la etiqueta de vídeo.
+    </video>
+  </div>
+</section>
+
+<!-- APP PERSONALIZADA -->
+<section class="wrap" style="padding:0 20px 60px">
+  <h2>App personalizada</h2>
+  <p>EvoGo también está disponible como <strong>app personalizada</strong> con el logo y los colores de tu empresa, para que tus clientes la identifiquen como propia.</p>
+</section>
+
+<!-- SECCIÓN DISTRIBUIDORES -->
+<section class="wrap" style="padding:60px 0">
+  <h2>Ventajas para distribuidores</h2>
+  <p>Con EvoGo puedes ofrecer a tus clientes finales un <strong>canal de pedidos 24/7</strong>, sin llamadas ni correos. Tus comerciales ahorran tiempo y el cliente gana autonomía y confianza.</p>
+  <p>Haz crecer tu negocio con un sistema ágil, moderno y completamente integrado con XgestEvo.</p>
+</section>
+
+<!-- STATS de ventas -->
+<section class="stats">
+  <div class="wrap grid grid-4">
+    <div class="stat">
+      <h3>+Agilidad</h3>
+      <p>Pedidos desde el móvil en 3 pasos.</p>
+    </div>
+    <div class="stat">
+      <h3>Menos errores</h3>
+      <p>Tarifas y stock en tiempo real.</p>
+    </div>
+    <div class="stat">
+      <h3>Confirmación</h3>
+      <p>Email automático de pedido, sin firmas.</p>
+    </div>
+    <div class="stat">
+      <h3>Equipo alineado</h3>
+      <p>Clientes y rutas centralizados.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFICIOS / FEATURES -->
+<section class="features wrap">
+  <div class="feature">
+    <div class="feature-icon">⚡</div>
+    <h3>Pedidos en segundos</h3>
+    <p>Busca producto por referencia, escanea código o filtra por familia. Añade, aplica tarifas y ¡listo!</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🔄</div>
+    <h3>Sincronizado con XgestEvo</h3>
+    <p>Clientes, tarifas, stock y formas de pago bajan de XgestEvo. Pedidos suben sin duplicidades.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">📩</div>
+    <h3>Confirmación de pedido</h3>
+    <p>Resumen claro y confirmación por email para el cliente. No se firman documentos.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🧾</div>
+    <h3>Precios y tarifas</h3>
+    <p>Respeta tarifas, descuentos y promociones vigentes. Controla márgenes y evita errores.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">👥</div>
+    <h3>Cartera y rutas</h3>
+    <p>Acceso a clientes, contactos, direcciones de envío y notas comerciales desde el móvil.</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🛡️</div>
+    <h3>Seguridad y RGPD</h3>
+    <p>Conexión cifrada, roles de usuario y tratamiento de datos conforme a RGPD.</p>
+  </div>
+</section>
+
+<!-- VENTAJAS -->
+<section class="wrap benefits">
+  <h2>Ventajas para distribuidores y clientes</h2>
+  <div class="grid grid-2">
+    <ul class="bullet">
+      <li>Catálogo digital con búsqueda y filtros por familias.</li>
+      <li>Tarifas y promociones aplicadas automáticamente.</li>
+      <li>Carrito ágil con +/- y resumen de pedido claro.</li>
+      <li>Confirmación de pedido por email (sin firmas).</li>
+    </ul>
+    <ul class="bullet">
+      <li>Integración con XgestEvo: cero duplicidades.</li>
+      <li>Roles y permisos para tu equipo comercial.</li>
+      <li>RGPD y seguridad en las comunicaciones.</li>
+      <li>Disponible en iOS y Android.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- DISTRIBUIDORES CTA -->
+<section class="wrap dist-cta">
+  <div class="dist-card">
+    <h2>¿Eres distribuidor?</h2>
+    <p>Ofrece a tus clientes un <strong>canal de pedidos 24/7</strong> con tu catálogo y tarifas. Gana agilidad y visibilidad de la demanda real.</p>
+    <div class="store-badges">
+      <a href="mailto:madinfor@madinfor.com" class="btn primary">Quiero distribuir EvoGo</a>
+      <a href="mailto:madinfor@madinfor.com" class="btn outline">Pedir información</a>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section class="wrap">
+  <h2>Cómo funciona</h2>
+  <div class="grid grid-3 steps">
+    <div class="step"><strong>Conecta XgestEvo</strong><br><span class="muted">Importa clientes, tarifas y catálogo.</span></div>
+    <div class="step"><strong>Toma el pedido</strong><br><span class="muted">Busca/escanea, aplica condiciones, confirma.</span></div>
+    <div class="step"><strong>Confirmación</strong><br><span class="muted">Se envía email al cliente y a Madinfor.</span></div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="testis">
+  <div class="wrap grid grid-3">
+    <div class="quote">“Nuestros comerciales pasan menos tiempo tecleando y más vendiendo.”<strong>Laura G.</strong><small>Resp. Comercial</small></div>
+    <div class="quote">“La integración con XgestEvo nos ha quitado tareas manuales.”<strong>Javier M.</strong><small>Operaciones</small></div>
+    <div class="quote">“La confirmación de pedido aporta claridad al cliente.”<strong>Sara R.</strong><small>Account Manager</small></div>
+  </div>
+</section>
+
+<!-- CTA DEMO -->
+<section class="cta2">
+  <div class="wrap center">
+    <h2>Listo para acelerar tus ventas</h2>
+    <p>Implantación ágil, formación express y soporte de Madinfor.</p>
+    <div class="store-badges" style="justify-content:center">
+      <a href="mailto:madinfor@madinfor.com" class="btn primary">Solicitar demo</a>
+      <a href="mailto:madinfor@madinfor.com" class="btn outline">Contacto ventas</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="wrap" style="padding:40px 0">
+  <h2>Preguntas frecuentes</h2>
+  <details>
+    <summary>¿Necesito XgestEvo para usar EvoGo?</summary>
+    <p>No necesariamente. EvoGo está diseñado para trabajar conectado con XgestEvo y sincronizar clientes, tarifas, productos y stock, pero también se ofrece una versión alternativa para clientes que no usan XgestEvo.</p>
+  </details>
+  <details>
+    <summary>¿Se firman documentos en la app?</summary>
+    <p>No. EvoGo está pensada para realizar pedidos de forma ágil y transparente, sin firma de documentos.</p>
+  </details>
+  <details>
+    <summary>¿Puedo personalizar tarifas y permisos?</summary>
+    <p>Sí, se respetan tarifas y roles definidos en XgestEvo. Puedes limitar visibilidad y acciones por usuario.</p>
+  </details>
+  <details>
+    <summary>¿Qué artículos están disponibles en la aplicación?</summary>
+    <p>Son los productos que aparecen en la página web (las familias de los grupos) dados de alta en XgestEvo.</p>
+  </details>
+</section>
+
+<!-- Contacto (Madinfor S.L.U.) -->
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <h3>Contacto</h3>
+      <address>
+        <strong>Madinfor S.L.U.</strong><br>
+        Plaza de los Naranjos, 16<br>
+        14920 Aguilar de la Frontera (Córdoba)<br>
+        CIF: B14682140
+      </address>
+    </div>
+    <div class="footer-contact">
+      <ul class="contact-list">
+        <li><span>Teléfono:</span> <a href="tel:+34957689436">957 689 436</a></li>
+        <li><span>Email:</span> <a href="mailto:madinfor@madinfor.com">madinfor@madinfor.com</a></li>
+      </ul>
+      <p class="legal">© <span id="y"></span> Madinfor S.L.U. · Todos los derechos reservados</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Barra legal horizontal -->
+<div class="legal-bar">
+  <div class="wrap">
+    <span>© <span id="y2"></span> Madinfor S.L.U.</span>
+    <span>·</span>
+    <a href="#" onclick="showText('terms');return false;">Condiciones de uso</a>
+    <span>·</span>
+    <a href="/privacidad">Privacidad</a>
+    <span>·</span>
+    <a href="#" onclick="showText('legal');return false;">Aviso legal</a>
+    <span>·</span>
+    <a href="mailto:madinfor@madinfor.com">madinfor@madinfor.com</a>
+    <span>·</span>
+    <a href="/admin/login">Administración</a>
+  </div>
+</div>
+
+<!-- Barra sticky con CTA -->
+<div class="sticky-bar">
+  <div class="wrap">
+    <div class="mini">
+      <span class="chip">📲 Demo guiada</span>
+      <small class="muted">Te ayudamos a desplegar EvoGo en tu equipo</small>
+    </div>
+    <div class="mini">
+      <a href="mailto:madinfor@madinfor.com" class="btn primary">Pedir demo</a>
+      <a href="mailto:madinfor@madinfor.com" class="btn outline">Contacto ventas</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // año dinámico
+  document.getElementById('y').textContent = new Date().getFullYear();
+  document.getElementById('y2').textContent = new Date().getFullYear();
+
+  // Textos legales compactos (se muestran en alert para simplicidad, puedes cambiar a modal)
+  const textos = {
+    terms: `EvoGo es una app de pedidos para clientes y distribuidores de Madinfor S.L.U. El uso implica la aceptación de estas condiciones. Los pedidos se gestionan por Madinfor; no se firman documentos en la app.`,
+    legal: `Titular: Madinfor S.L.U. · CIF B14682140 · Plaza de los Naranjos, 16 – 14920 Aguilar de la Frontera (Córdoba) · Tel. 957 689 436 · madinfor@madinfor.com. Jurisdicción: tribunales de Córdoba (España).`
+  };
+  function showText(key){ alert(textos[key]); }
+</script>
+
+</body>
+</html>
