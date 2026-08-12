@@ -11,12 +11,28 @@ jobs:
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
+          envs: SMTP_PASSWORD
           script: |
             cd /home/users/evogo-app/www/evogo.app
             git fetch origin
             git reset --hard origin/main
+            php -r '
+              $config = [
+                "host" => "servicios.evogo.app",
+                "port" => 465,
+                "secure" => "ssl",
+                "username" => "hola@evogo.app",
+                "password" => getenv("SMTP_PASSWORD"),
+                "from_email" => "hola@evogo.app",
+                "from_name" => "EvoGo",
+                "notify_to" => "madinfor@madinfor.com",
+              ];
+              file_put_contents("mail-config.php", "<?php\nreturn " . var_export($config, true) . ";\n");
+            '

@@ -466,12 +466,9 @@
       <h2>Hablemos</h2>
       <p class="muted">Cuéntanos qué necesitas y te responderemos lo antes posible. También puedes escribirnos a <a href="mailto:madinfor@madinfor.com">madinfor@madinfor.com</a> o llamarnos al <a href="tel:+34957689436">957 689 436</a>.</p>
     </div>
-    <form class="form-contact" action="https://formsubmit.co/madinfor@madinfor.com" method="POST">
+    <form class="form-contact" action="/contact.php" method="POST">
       <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <input type="hidden" name="_subject" value="Nuevo mensaje desde evogo.app">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="true">
-      <input type="hidden" name="_next" value="https://www.evogo.app/gracias.html">
+      <input type="hidden" name="_ts" id="cf-ts" value="">
       <div class="form-row two">
         <div>
           <label for="cf-nombre">Nombre</label>
@@ -558,6 +555,10 @@
   // año dinámico
   document.getElementById('y').textContent = new Date().getFullYear();
   document.getElementById('y2').textContent = new Date().getFullYear();
+
+  // Marca de tiempo anti-bot para el formulario de contacto
+  var cfTs = document.getElementById('cf-ts');
+  if (cfTs) cfTs.value = Date.now();
 
   // Textos legales compactos (se muestran en alert para simplicidad, puedes cambiar a modal)
   const textos = {
