@@ -53,9 +53,24 @@
     .muted{color:#475569}
     .chip{display:inline-flex;align-items:center;gap:8px;padding:.35rem .6rem;border:1px solid #e5e7eb;border-radius:999px;font-size:.9rem}
 
+    html{scroll-behavior:smooth}
+    section[id]{scroll-margin-top:76px}
+
+    /* Navegación superior */
+    .navbar{position:sticky;top:0;z-index:1050;background:#ffffffed;backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid #e5e7eb}
+    .navbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 20px}
+    .nav-brand{font-weight:900;font-size:1.25rem;color:var(--blue);text-decoration:none;letter-spacing:-.02em}
+    .nav-links{display:none;gap:24px;align-items:center}
+    .nav-links a{color:#334155;text-decoration:none;font-size:.92rem;font-weight:500;transition:color .15s}
+    .nav-links a:hover{color:var(--blue)}
+    @media (min-width:860px){.nav-links{display:flex}}
+
     /* Hero mejorado */
-    .hero{position:relative;background:linear-gradient(180deg,#ffffff, #f8fafc)}
-    .hero .wrap{display:grid;gap:20px;align-items:center}
+    .hero{position:relative;background:linear-gradient(180deg,#ffffff, #f8fafc);padding:48px 0 40px}
+    .hero-grid{display:grid;gap:32px;align-items:center}
+    @media (min-width:900px){.hero-grid{grid-template-columns:1.1fr .9fr}}
+    .hero .phone.hero-phone{margin:0 auto;max-width:300px}
+    @media (min-width:900px){.hero .phone.hero-phone{max-width:340px}}
     .store-badges{display:flex;flex-wrap:wrap;gap:10px}
     .trust{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
     .trust small{color:#64748b}
@@ -134,13 +149,41 @@
     /* Vídeo tutorial */
     .video-frame{max-width:900px;margin:0 auto;background:#0b0d10;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(2,6,23,.12)}
     .video-frame video{width:100%;height:auto;max-height:70vh;display:block;object-fit:contain;background:#000}
+
+    /* Formulario de contacto */
+    .form-contact{display:grid;gap:16px}
+    .form-row{display:grid;gap:16px}
+    @media (min-width:640px){.form-row.two{grid-template-columns:1fr 1fr}}
+    .form-contact label{display:block;font-size:.85rem;font-weight:600;color:#334155;margin-bottom:6px}
+    .form-contact input,.form-contact textarea{width:100%;padding:.7rem .85rem;border:1px solid #cbd5e1;border-radius:.6rem;font:inherit;color:#0f172a;background:#fff;transition:border-color .15s,box-shadow .15s}
+    .form-contact input:focus,.form-contact textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px #2563eb22}
+    .form-contact textarea{resize:vertical;min-height:130px}
+    .form-contact .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .form-contact button{justify-self:start}
   </style>
 </head>
 <body>
 
+<!-- NAVEGACIÓN -->
+<nav class="navbar">
+  <div class="wrap">
+    <a href="#" class="nav-brand">Evo<span class="go-badge" style="font-size:.6em">Go</span></a>
+    <div class="nav-links">
+      <a href="#caracteristicas">Características</a>
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#pagos">Pagos</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#contacto" class="btn primary" style="padding:.5rem .9rem;font-size:.9rem;margin:0">Solicitar demo</a>
+    </div>
+  </div>
+</nav>
+
 <!-- HERO -->
 <div class="hero">
-  <div class="wrap">
+  <div class="wrap hero-grid">
     <div>
       <h1>Evo<span class="go-badge">Go</span></h1>
       <p class="subtitle">Cierra pedidos en minutos y sincroniza al instante con <strong>XgestEvo</strong>.</p>
@@ -148,7 +191,7 @@
       <div class="store-badges">
         <a href="https://play.google.com/store/apps/details?id=com.madinfor.evogo" class="btn primary">Google Play</a>
         <a href="https://apps.apple.com/es/app/evogo/id6753867853" class="btn outline">App Store</a>
-        <a href="mailto:madinfor@madinfor.com" class="btn" style="border:1px solid #e5e7eb">Solicitar demo</a>
+        <a href="#contacto" class="btn" style="border:1px solid #e5e7eb">Solicitar demo</a>
       </div>
       <div class="trust" style="margin-top:8px">
         <small>Integrada con</small>
@@ -157,7 +200,11 @@
         <span class="chip">🔐 SSL & RGPD</span>
         <span class="chip">☁️ Confirmación por email</span>
       </div>
-    
+    </div>
+    <div class="phone hero-phone">
+      <div class="phone-notch"></div>
+      <img src="img/evogo_cart.png" alt="Pantalla de pedido en la app EvoGo" class="phone-screen">
+    </div>
   </div>
 </div>
 
@@ -250,7 +297,7 @@
 </section>
 
 <!-- PAGOS CON STRIPE -->
-<section class="wrap" style="padding:0 20px 60px">
+<section id="pagos" class="wrap" style="padding:0 20px 60px">
   <div class="dist-card">
     <h2>💳 Ahora, pagos online con Stripe</h2>
     <p>EvoGo incorpora pagos con tarjeta integrados con <strong>Stripe</strong>, el proveedor de pagos líder mundial. Tus clientes pueden pagar sus pedidos al instante desde la app, de forma segura y sin fricciones.</p>
@@ -286,7 +333,7 @@
 </section>
 
 <!-- BENEFICIOS / FEATURES -->
-<section class="features wrap">
+<section id="caracteristicas" class="features wrap">
   <div class="feature">
     <div class="feature-icon">⚡</div>
     <h3>Pedidos en segundos</h3>
@@ -325,7 +372,7 @@
 </section>
 
 <!-- VENTAJAS -->
-<section class="wrap benefits">
+<section class="wrap benefits" style="padding:56px 20px">
   <h2>Ventajas para distribuidores y clientes</h2>
   <div class="grid grid-2">
     <ul class="bullet">
@@ -345,19 +392,19 @@
 </section>
 
 <!-- DISTRIBUIDORES CTA -->
-<section class="wrap dist-cta">
+<section class="wrap dist-cta" style="padding:0 20px 56px">
   <div class="dist-card">
     <h2>¿Eres distribuidor?</h2>
     <p>Ofrece a tus clientes un <strong>canal de pedidos 24/7</strong> con tu catálogo y tarifas. Gana agilidad y visibilidad de la demanda real.</p>
     <div class="store-badges">
-      <a href="mailto:madinfor@madinfor.com" class="btn primary">Quiero distribuir EvoGo</a>
-      <a href="mailto:madinfor@madinfor.com" class="btn outline">Pedir información</a>
+      <a href="#contacto" class="btn primary">Quiero distribuir EvoGo</a>
+      <a href="#contacto" class="btn outline">Pedir información</a>
     </div>
   </div>
 </section>
 
 <!-- CÓMO FUNCIONA -->
-<section class="wrap">
+<section id="como-funciona" class="wrap" style="padding:56px 20px">
   <h2>Cómo funciona</h2>
   <div class="grid grid-3 steps">
     <div class="step"><strong>Conecta XgestEvo</strong><br><span class="muted">Importa clientes, tarifas y catálogo.</span></div>
@@ -381,14 +428,14 @@
     <h2>Listo para acelerar tus ventas</h2>
     <p>Implantación ágil, formación express y soporte de Madinfor.</p>
     <div class="store-badges" style="justify-content:center">
-      <a href="mailto:madinfor@madinfor.com" class="btn primary">Solicitar demo</a>
-      <a href="mailto:madinfor@madinfor.com" class="btn outline">Contacto ventas</a>
+      <a href="#contacto" class="btn primary">Solicitar demo</a>
+      <a href="#contacto" class="btn outline">Contacto ventas</a>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section class="wrap" style="padding:40px 0">
+<section id="faq" class="wrap" style="padding:40px 0">
   <h2>Preguntas frecuentes</h2>
   <details>
     <summary>¿Necesito XgestEvo para usar EvoGo?</summary>
@@ -410,6 +457,48 @@
     <summary>¿Cómo se pagan los pedidos?</summary>
     <p>Los pedidos se pueden pagar con tarjeta directamente desde la app, mediante <strong>Stripe</strong>. Es un proceso cifrado y seguro: nunca almacenamos ni gestionamos los datos de tu tarjeta.</p>
   </details>
+</section>
+
+<!-- FORMULARIO DE CONTACTO -->
+<section id="contacto" class="wrap" style="padding:56px 20px">
+  <div class="grid grid-2" style="align-items:start">
+    <div>
+      <h2>Hablemos</h2>
+      <p class="muted">Cuéntanos qué necesitas y te responderemos lo antes posible. También puedes escribirnos a <a href="mailto:madinfor@madinfor.com">madinfor@madinfor.com</a> o llamarnos al <a href="tel:+34957689436">957 689 436</a>.</p>
+    </div>
+    <form class="form-contact" action="https://formsubmit.co/madinfor@madinfor.com" method="POST">
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="_subject" value="Nuevo mensaje desde evogo.app">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_next" value="https://www.evogo.app/gracias.html">
+      <div class="form-row two">
+        <div>
+          <label for="cf-nombre">Nombre</label>
+          <input id="cf-nombre" type="text" name="Nombre" required>
+        </div>
+        <div>
+          <label for="cf-empresa">Empresa</label>
+          <input id="cf-empresa" type="text" name="Empresa">
+        </div>
+      </div>
+      <div class="form-row two">
+        <div>
+          <label for="cf-email">Email</label>
+          <input id="cf-email" type="email" name="Email" required>
+        </div>
+        <div>
+          <label for="cf-telefono">Teléfono</label>
+          <input id="cf-telefono" type="tel" name="Teléfono">
+        </div>
+      </div>
+      <div>
+        <label for="cf-mensaje">Mensaje</label>
+        <textarea id="cf-mensaje" name="Mensaje" required placeholder="Cuéntanos en qué podemos ayudarte..."></textarea>
+      </div>
+      <button type="submit" class="btn primary">Enviar mensaje</button>
+    </form>
+  </div>
 </section>
 
 <!-- Contacto (Madinfor S.L.U.) -->
@@ -445,9 +534,9 @@
     <span>·</span>
     <a href="#" onclick="showText('legal');return false;">Aviso legal</a>
     <span>·</span>
-    <a href="mailto:madinfor@madinfor.com">madinfor@madinfor.com</a>
+    <a href="#contacto">Contacto</a>
     <span>·</span>
-    <a href="/admin/login">Administración</a>
+    <a href="https://api.evogo.app/admin/login">Administración</a>
   </div>
 </div>
 
@@ -459,8 +548,8 @@
       <small class="muted">Te ayudamos a desplegar EvoGo en tu equipo</small>
     </div>
     <div class="mini">
-      <a href="mailto:madinfor@madinfor.com" class="btn primary">Pedir demo</a>
-      <a href="mailto:madinfor@madinfor.com" class="btn outline">Contacto ventas</a>
+      <a href="#contacto" class="btn primary">Pedir demo</a>
+      <a href="#contacto" class="btn outline">Contacto ventas</a>
     </div>
   </div>
 </div>
