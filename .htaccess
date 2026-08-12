@@ -10,7 +10,7 @@ RedirectMatch 404 /\.git
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data:; media-src 'self' https://app.madinfor.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-ancestors 'self'; base-uri 'self'"
+  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data:; media-src 'self' https://app.madinfor.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://formsubmit.co"
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 
