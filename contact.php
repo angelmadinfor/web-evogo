@@ -19,6 +19,51 @@ function back_to(string $path): void
     exit;
 }
 
+// Límite de envíos por IP: evita usar el formulario como relay de spam/phishing
+// hacia direcciones arbitrarias. Cuenta cualquier intento, no solo los válidos.
+function rate_limited(string $ip, int $maxPerHour = 5): bool
+{
+    $dir = __DIR__ . '/data';
+    if (!is_dir($dir) && !@mkdir($dir, 0700, true) && !is_dir($dir)) {
+        return false; // si no hay almacenamiento disponible, no bloqueamos a usuarios legítimos
+    }
+    $file = $dir . '/rate-limit.json';
+    $fp = @fopen($file, 'c+');
+    if (!$fp) {
+        return false;
+    }
+    flock($fp, LOCK_EX);
+    $raw = stream_get_contents($fp) ?: '{}';
+    $data = json_decode($raw, true);
+    if (!is_array($data)) {
+        $data = [];
+    }
+    $now = time();
+    $key = hash('sha256', $ip);
+    $recent = array_values(array_filter($data[$key] ?? [], static fn ($t) => $t > $now - 3600));
+    $limited = count($recent) >= $maxPerHour;
+    if (!$limited) {
+        $recent[] = $now;
+    }
+    $data[$key] = $recent;
+    foreach ($data as $k => $times) {
+        if (empty($times)) {
+            unset($data[$k]);
+        }
+    }
+    ftruncate($fp, 0);
+    rewind($fp);
+    fwrite($fp, json_encode($data));
+    fflush($fp);
+    flock($fp, LOCK_UN);
+    fclose($fp);
+    return $limited;
+}
+
+if (rate_limited($_SERVER['REMOTE_ADDR'] ?? '0.0.0.0')) {
+    back_to('/gracias.html');
+}
+
 $configFile = __DIR__ . '/mail-config.php';
 if (!is_file($configFile)) {
     error_log('contact.php: falta mail-config.php');
@@ -59,6 +104,11 @@ $mensaje = truncate($mensaje, 5000);
 
 if ($nombre === '' || $mensaje === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     back_to('/#contacto');
+}
+
+// Heurística simple: los mensajes de spam suelen ir cargados de enlaces.
+if (preg_match_all('#https?://|www\.#i', $mensaje) >= 3) {
+    back_to('/gracias.html');
 }
 
 $resumen = "Nombre: {$nombre}\n"

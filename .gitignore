@@ -1,5 +1,6 @@
 .env
 mail-config.php
+data/
 *.log
 .DS_Store
 Thumbs.db
