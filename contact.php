@@ -1,6 +1,12 @@
 <?php
 declare(strict_types=1);
 
+// TEMP DEBUG — quitar en cuanto esté diagnosticado
+if (($_GET['debug'] ?? '') === 'evogo2026') {
+    ini_set('display_errors', '1');
+    error_reporting(E_ALL);
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     exit('Method not allowed');
@@ -38,11 +44,16 @@ if ($ts <= 0 || ($nowMs - $ts) < 3000) {
     back_to('/gracias.html');
 }
 
+function truncate(string $value, int $maxLen): string
+{
+    return function_exists('mb_substr') ? mb_substr($value, 0, $maxLen) : substr($value, 0, $maxLen);
+}
+
 function field(string $key, int $maxLen = 300): string
 {
     $value = trim((string) ($_POST[$key] ?? ''));
     $value = preg_replace('/[\r\n]+/', ' ', $value) ?? '';
-    return mb_substr($value, 0, $maxLen);
+    return truncate($value, $maxLen);
 }
 
 $nombre = field('Nombre', 150);
@@ -50,7 +61,7 @@ $empresa = field('Empresa', 150);
 $email = field('Email', 200);
 $telefono = field('Teléfono', 50);
 $mensaje = trim((string) ($_POST['Mensaje'] ?? ''));
-$mensaje = mb_substr($mensaje, 0, 5000);
+$mensaje = truncate($mensaje, 5000);
 
 if ($nombre === '' || $mensaje === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     back_to('/#contacto');
