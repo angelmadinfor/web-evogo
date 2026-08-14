@@ -1,12 +1,6 @@
 <?php
 declare(strict_types=1);
 
-// TEMP DEBUG — quitar en cuanto esté diagnosticado
-if (($_GET['debug'] ?? '') === 'evogo2026') {
-    ini_set('display_errors', '1');
-    error_reporting(E_ALL);
-}
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     exit('Method not allowed');
